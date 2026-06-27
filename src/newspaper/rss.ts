@@ -39,9 +39,15 @@ async function fetchGoogleNewsRss(query: string, max = 5): Promise<NewsItem[]> {
 
 export interface NewsByCategory {
   steel: NewsItem[];
+  aiDx: NewsItem[];
+  realestate: NewsItem[];
 }
 
 export async function fetchAllNews(): Promise<NewsByCategory> {
-  const steel = await fetchGoogleNewsRss("鉄鋼 日本製鉄 JFE 神戸製鋼", 5);
-  return { steel };
+  const [steel, aiDx, realestate] = await Promise.all([
+    fetchGoogleNewsRss("鉄鋼 日本製鉄 JFE 神戸製鋼", 5),
+    fetchGoogleNewsRss("営業DX AI営業 セールステック CRM 生成AI ビジネス活用", 4),
+    fetchGoogleNewsRss("不動産 地価 ワンルームマンション投資 土地価格 不動産市況", 4),
+  ]);
+  return { steel, aiDx, realestate };
 }
