@@ -103,10 +103,20 @@ ${sportsNews}
 
 原稿のみ出力してください。説明や前置きは不要です。`;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
-
-  return response.text ?? "";
+  // 503等の一時エラーは最大3回リトライ
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+      return response.text ?? "";
+    } catch (err) {
+      const isRetryable = err instanceof Error && err.message.includes("503");
+      if (!isRetryable || attempt === 3) throw err;
+      console.warn(`Gemini 一時エラー（試行 ${attempt}/3）、10秒後にリトライ...`);
+      await new Promise((r) => setTimeout(r, 10_000));
+    }
+  }
+  return "";
 }
