@@ -10,6 +10,17 @@ const VOICE = "ja-JP-KeitaNeural";
 // Edge TTSの出力はMP3なので、段落間は短いポーズ用テキストで代用する
 const PAUSE_TEXT = "　。　。"; // 読み上げると自然な間になる
 
+// 読み間違えやすい固有名詞を読み仮名に置換する
+const READINGS: [RegExp, string][] = [
+  [/日本製鉄/g, "にっぽんせいてつ"],
+  [/ＪＦＥ/g, "ジェイエフイー"],
+  [/JFE/g, "ジェイエフイー"],
+  [/神戸製鋼/g, "こうべせいこう"],
+  [/ギラヴァンツ北九州/g, "ギラヴァンツきたきゅうしゅう"],
+  [/ライジングゼファー/g, "ライジングゼファー"],
+  [/DeNA/g, "ディーエヌエー"],
+];
+
 async function streamToBuffer(tts: MsEdgeTTS, text: string): Promise<Buffer> {
   const { audioStream } = tts.toStream(text);
   const chunks: Buffer[] = [];
@@ -28,8 +39,14 @@ export async function textToMp3(
   const tts = new MsEdgeTTS();
   await tts.setMetadata(VOICE, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
 
+  // 固有名詞の読み仮名を置換
+  const normalized = READINGS.reduce(
+    (text, [pattern, reading]) => text.replace(pattern, reading),
+    script
+  );
+
   // 段落ごとに分割して個別に変換し、間にポーズを挟む
-  const paragraphs = script
+  const paragraphs = normalized
     .split(/\n\n+/)
     .map((p) => p.trim())
     .filter((p) => p.length > 0);
