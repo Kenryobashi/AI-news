@@ -1,32 +1,24 @@
 // Edge TTS（msedge-tts）でテキストをMP3に変換する（APIキー不要・無料）
-// SSMLで速度・ピッチ・間を調整して人間らしい話し方にする
+// toStream を段落ごとに呼び出して結合し、自然な間を作る
 
 import { MsEdgeTTS, OUTPUT_FORMAT } from "msedge-tts";
 import { writeFile } from "fs/promises";
 
 const VOICE = "ja-JP-KeitaNeural";
 
-function toSSML(text: string): string {
-  // 改行を自然な間（ポーズ）に変換し、全体の話し方を調整
-  const escaped = text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+// 無音バッファを生成（44バイトのWAVヘッダ相当のMP3フレームの代わりに空バッファ）
+// Edge TTSの出力はMP3なので、段落間は短いポーズ用テキストで代用する
+const PAUSE_TEXT = "　。　。"; // 読み上げると自然な間になる
 
-  // 段落ごとに分割して間を挿入
-  const withBreaks = escaped
-    .split(/\n\n+/)
-    .map((para) => `<p>${para.replace(/\n/g, '<break time="400ms"/>')}</p>`)
-    .join('<break time="700ms"/>');
-
-  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="ja-JP">
-  <voice name="${VOICE}">
-    <prosody rate="-8%" pitch="-3%">
-      ${withBreaks}
-    </prosody>
-  </voice>
-</speak>`;
+async function streamToBuffer(tts: MsEdgeTTS, text: string): Promise<Buffer> {
+  const { audioStream } = tts.toStream(text);
+  const chunks: Buffer[] = [];
+  await new Promise<void>((resolve, reject) => {
+    audioStream.on("data", (chunk: Buffer) => chunks.push(chunk));
+    audioStream.on("end", resolve);
+    audioStream.on("error", reject);
+  });
+  return Buffer.concat(chunks);
 }
 
 export async function textToMp3(
@@ -36,15 +28,20 @@ export async function textToMp3(
   const tts = new MsEdgeTTS();
   await tts.setMetadata(VOICE, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
 
-  const ssml = toSSML(script);
-  const { audioStream } = tts.rawToStream(ssml);
+  // 段落ごとに分割して個別に変換し、間にポーズを挟む
+  const paragraphs = script
+    .split(/\n\n+/)
+    .map((p) => p.trim())
+    .filter((p) => p.length > 0);
 
-  const chunks: Buffer[] = [];
-  await new Promise<void>((resolve, reject) => {
-    audioStream.on("data", (chunk: Buffer) => chunks.push(chunk));
-    audioStream.on("end", resolve);
-    audioStream.on("error", reject);
-  });
+  const buffers: Buffer[] = [];
+  for (const para of paragraphs) {
+    const audioBuf = await streamToBuffer(tts, para);
+    buffers.push(audioBuf);
+    // 段落間にポーズ（短い無音読み上げ）
+    const pauseBuf = await streamToBuffer(tts, PAUSE_TEXT);
+    buffers.push(pauseBuf);
+  }
 
-  await writeFile(outputPath, Buffer.concat(chunks));
+  await writeFile(outputPath, Buffer.concat(buffers));
 }
