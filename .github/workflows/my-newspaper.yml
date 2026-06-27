@@ -1,0 +1,42 @@
+name: My新聞 - 朝の通勤ラジオ
+
+on:
+  workflow_dispatch: {}   # 手動実行（テスト用）
+  schedule:
+    - cron: '0 22 * * *'  # 毎日 07:00 JST (22:00 UTC 前日)
+
+permissions:
+  contents: write   # docs/ へ MP3・feed.xml を push するために必要
+
+concurrency:
+  group: my-newspaper
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: 音声生成
+        run: npm run newspaper
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_PAGES_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+
+      - name: docs/ を GitHub Pages へ push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --cached --quiet || git commit -m "chore: My新聞 $(date +'%Y-%m-%d') を追加"
+          git push
