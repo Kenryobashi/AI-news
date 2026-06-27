@@ -41,7 +41,6 @@ export interface NewsByCategory {
   steel: NewsItem[];
 }
 
-// MVP: 鉄鋼業界ニュースのみ取得（後でカテゴリ追加）
 export async function fetchAllNews(): Promise<NewsByCategory> {
   const steel = await fetchGoogleNewsRss("鉄鋼 日本製鉄 JFE 神戸製鋼", 5);
   return { steel };
