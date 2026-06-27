@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
     <title>My新聞 - 朝の通勤ラジオ</title>
@@ -9,7 +10,15 @@
     <description>毎朝7時に自動生成される個人向けニュース音声番組</description>
     <itunes:author>My Newspaper</itunes:author>
     <itunes:category text="News"></itunes:category>
-    <lastBuildDate>Sat, 27 Jun 2026 11:44:03 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 11:46:18 GMT</lastBuildDate>
+    <item>
+      <title>My新聞 2026-06-27</title>
+      <description>2026-06-27の朝刊。天気・相場・鉄鋼業界ニュース・スポーツ。</description>
+      <enclosure url="https://Kenryobashi.github.io/AI-news/episodes/2026-06-27.mp3" length="0" type="audio/mpeg"></enclosure>
+      <guid>https://Kenryobashi.github.io/AI-news/episodes/2026-06-27.mp3</guid>
+      <pubDate>Sat, 27 Jun 2026 11:46:18 GMT</pubDate>
+      <itunes:duration>0:10:00</itunes:duration>
+    </item>
     <item>
       <title>My新聞 2026-06-27</title>
       <description>2026-06-27の朝刊。天気・相場・鉄鋼業界ニュース・スポーツ。</description>
