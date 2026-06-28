@@ -38,16 +38,18 @@ async function fetchTeamNews(team: string, query: string, max = 2): Promise<Spor
 }
 
 export interface SportsData {
-  baseball: SportsItem[];  // 横浜DeNAベイスターズ
-  soccer: SportsItem[];    // ギラヴァンツ北九州
+  worldcup: SportsItem[];   // FIFAワールドカップ（開催期間中）
+  baseball: SportsItem[];   // 横浜DeNAベイスターズ
+  soccer: SportsItem[];     // ギラヴァンツ北九州
   basketball: SportsItem[]; // ライジングゼファーフクオカ
 }
 
 export async function fetchSports(): Promise<SportsData> {
-  const [baseball, soccer, basketball] = await Promise.all([
+  const [worldcup, baseball, soccer, basketball] = await Promise.all([
+    fetchTeamNews("ワールドカップ", "ワールドカップ サッカー 日本代表 試合結果 2026", 4),
     fetchTeamNews("横浜DeNAベイスターズ", "横浜DeNAベイスターズ 試合", 2),
     fetchTeamNews("ギラヴァンツ北九州", "ギラヴァンツ北九州", 2),
     fetchTeamNews("ライジングゼファーフクオカ", "ライジングゼファー バスケ", 2),
   ]);
-  return { baseball, soccer, basketball };
+  return { worldcup, baseball, soccer, basketball };
 }
