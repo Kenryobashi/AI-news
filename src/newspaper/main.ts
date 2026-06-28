@@ -22,7 +22,9 @@ if (!GEMINI_API_KEY) {
 
 async function main() {
   const today = new Date();
-  const dateStr = today.toISOString().slice(0, 10);
+  // GitHub ActionsはUTC動作のため、JST(+9)基準の日付に変換
+  const jstDate = new Date(today.getTime() + 9 * 60 * 60 * 1000);
+  const dateStr = jstDate.toISOString().slice(0, 10);
   const mp3Filename = `episodes/${dateStr}.mp3`;
   const mp3Path = `docs/${mp3Filename}`;
   const feedPath = "docs/feed.xml";
