@@ -7,7 +7,16 @@
     <description>毎朝7時に自動生成される個人向けニュース音声番組</description>
     <itunes:author>My Newspaper</itunes:author>
     <itunes:category text="News"/>
-    <lastBuildDate>Sun, 28 Jun 2026 20:48:27 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 20:52:23 GMT</lastBuildDate>
+
+    <item>
+      <title>My新聞 2026-06-29</title>
+      <description>2026-06-29の朝刊。天気・相場・鉄鋼業界ニュース・スポーツ。</description>
+      <enclosure url="https://Kenryobashi.github.io/AI-news/episodes/2026-06-29.mp3" length="6986592" type="audio/mpeg"/>
+      <guid isPermaLink="false">https://Kenryobashi.github.io/AI-news/episodes/2026-06-29.mp3?t=1782679877000</guid>
+      <pubDate>Sun, 28 Jun 2026 20:51:17 GMT</pubDate>
+      <itunes:duration>0:10:00</itunes:duration>
+    </item>
 
     <item>
       <title>My新聞 2026-06-29</title>
