@@ -12,7 +12,11 @@ export interface NewsItem {
 const parser = new XMLParser({ ignoreAttributes: false });
 
 async function fetchGoogleNewsRss(query: string, max = 5): Promise<NewsItem[]> {
-  const encoded = encodeURIComponent(query);
+  // 過去48時間以内の記事に絞る（同じニュースが毎日繰り返されるのを防ぐ）
+  const yesterday = new Date(Date.now() - 48 * 60 * 60 * 1000);
+  const afterDate = yesterday.toISOString().slice(0, 10); // YYYY-MM-DD
+  const queryWithDate = `${query} after:${afterDate}`;
+  const encoded = encodeURIComponent(queryWithDate);
   const url = `https://news.google.com/rss/search?q=${encoded}&hl=ja&gl=JP&ceid=JP:ja`;
 
   const res = await fetch(url, {

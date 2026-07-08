@@ -12,7 +12,9 @@ export interface SportsItem {
 }
 
 async function fetchTeamNews(team: string, query: string, max = 2): Promise<SportsItem[]> {
-  const encoded = encodeURIComponent(query);
+  const yesterday = new Date(Date.now() - 48 * 60 * 60 * 1000);
+  const afterDate = yesterday.toISOString().slice(0, 10);
+  const encoded = encodeURIComponent(`${query} after:${afterDate}`);
   const url = `https://news.google.com/rss/search?q=${encoded}&hl=ja&gl=JP&ceid=JP:ja`;
   try {
     const res = await fetch(url, {
