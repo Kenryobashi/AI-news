@@ -1,5 +1,14 @@
 [
   {
+    "title": "My新聞 2026-07-21",
+    "description": "2026-07-21の朝刊。天気・相場・鉄鋼業界ニュース・スポーツ。",
+    "url": "https://Kenryobashi.github.io/AI-news/episodes/2026-07-21.mp3",
+    "guid": "https://Kenryobashi.github.io/AI-news/episodes/2026-07-21.mp3?t=1784577662000",
+    "pubDate": "Mon, 20 Jul 2026 20:01:02 GMT",
+    "length": 5334624,
+    "duration": "0:10:00"
+  },
+  {
     "title": "My新聞 2026-07-20",
     "description": "2026-07-20の朝刊。天気・相場・鉄鋼業界ニュース・スポーツ。",
     "url": "https://Kenryobashi.github.io/AI-news/episodes/2026-07-20.mp3",
@@ -258,15 +267,6 @@
     "guid": "https://Kenryobashi.github.io/AI-news/episodes/2026-07-02.mp3?t=1782940625000",
     "pubDate": "Wed, 01 Jul 2026 21:17:05 GMT",
     "length": 6165504,
-    "duration": "0:10:00"
-  },
-  {
-    "title": "My新聞 2026-07-01",
-    "description": "2026-07-01の朝刊。天気・相場・鉄鋼業界ニュース・スポーツ。",
-    "url": "https://Kenryobashi.github.io/AI-news/episodes/2026-07-01.mp3",
-    "guid": "https://Kenryobashi.github.io/AI-news/episodes/2026-07-01.mp3?t=1782854532000",
-    "pubDate": "Tue, 30 Jun 2026 21:22:12 GMT",
-    "length": 6037920,
     "duration": "0:10:00"
   }
 ]
