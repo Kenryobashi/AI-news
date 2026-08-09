@@ -7,7 +7,16 @@
     <description>毎朝7時に自動生成される個人向けニュース音声番組</description>
     <itunes:author>My Newspaper</itunes:author>
     <itunes:category text="News"/>
-    <lastBuildDate>Sat, 08 Aug 2026 20:18:04 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 09 Aug 2026 20:20:16 GMT</lastBuildDate>
+
+    <item>
+      <title>My新聞 2026-08-10</title>
+      <description>2026-08-10の朝刊。天気・相場・鉄鋼業界ニュース・スポーツ。</description>
+      <enclosure url="https://Kenryobashi.github.io/AI-news/episodes/2026-08-10.mp3" length="6123168" type="audio/mpeg"/>
+      <guid isPermaLink="false">https://Kenryobashi.github.io/AI-news/episodes/2026-08-10.mp3?t=1786306752000</guid>
+      <pubDate>Sun, 09 Aug 2026 20:19:12 GMT</pubDate>
+      <itunes:duration>0:10:00</itunes:duration>
+    </item>
 
     <item>
       <title>My新聞 2026-08-09</title>
@@ -267,15 +276,6 @@
       <enclosure url="https://Kenryobashi.github.io/AI-news/episodes/2026-07-25.mp3" length="7770816" type="audio/mpeg"/>
       <guid isPermaLink="false">https://Kenryobashi.github.io/AI-news/episodes/2026-07-25.mp3?t=1784923252000</guid>
       <pubDate>Fri, 24 Jul 2026 20:00:52 GMT</pubDate>
-      <itunes:duration>0:10:00</itunes:duration>
-    </item>
-
-    <item>
-      <title>My新聞 2026-07-24</title>
-      <description>2026-07-24の朝刊。天気・相場・鉄鋼業界ニュース・スポーツ。</description>
-      <enclosure url="https://Kenryobashi.github.io/AI-news/episodes/2026-07-24.mp3" length="4957632" type="audio/mpeg"/>
-      <guid isPermaLink="false">https://Kenryobashi.github.io/AI-news/episodes/2026-07-24.mp3?t=1784839835000</guid>
-      <pubDate>Thu, 23 Jul 2026 20:50:35 GMT</pubDate>
       <itunes:duration>0:10:00</itunes:duration>
     </item>
   </channel>
